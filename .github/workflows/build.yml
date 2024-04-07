@@ -39,43 +39,26 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Run Trivy vulnerability scanner
-        id: scan-image-trivy
-        uses: aquasecurity/trivy-action@7b7aa264d83dc58691451798b4d117d53d21edfe
+      - name: Scan the container image - GitHub Anchore
+        id: scan-image-github
+        uses: anchore/scan-action@v3
         env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
           IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          image-ref: '$IMAGE_TAG'
-          format: 'template'
-          template: '@/contrib/sarif.tpl'
-          output: 'trivy-results.sarif'
-          severity: 'CRITICAL,HIGH'
+          image: "$IMAGE_TAG"
+          fail-build: false
+          severity-cutoff: critical
+          output-format: 'sarif'
 
-      - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
-        with:
-          sarif_file: 'trivy-results.sarif'
-
-#      - name: Scan the container image - GitHub Anchore
-#        id: scan-image-github
-#        uses: anchore/scan-action@v3
-#        with:
-#          image: "$IMAGE_TAG"
-#          fail-build: false
-#          severity-cutoff: low
-#          output-format: 'sarif'##
-##
 #
 #
-#      - name: upload Anchore scan SARIF report
-#        uses: github/codeql-action/upload-sarif@v1
-#       with:
-#          sarif_file: ${{ steps.scan-image-github.outputs.sarif }}
-#          
-#      - name: Inspect action SARIF report
-#        run: cat ${{ steps.scan-image-github.outputs.sarif }}
+      - name: upload Anchore scan SARIF report
+        uses: github/codeql-action/upload-sarif@v1
+       with:
+          sarif_file: ${{ steps.scan-image-github.outputs.sarif }}
+          
+      - name: Inspect action SARIF report
+        run: cat ${{ steps.scan-image-github.outputs.sarif }}
 
       - name: Scan the container image -  AWS
         id: scan-image-aws
