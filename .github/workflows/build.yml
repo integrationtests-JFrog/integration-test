@@ -50,10 +50,10 @@ jobs:
       - name: upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v2
         with:
-          sarif_file: ${{ steps.scan.outputs.sarif }}
+          sarif_file: ${{ steps.scan-image-github.outputs.sarif }}
           
       - name: Inspect action SARIF report
-        run: cat ${{ steps.scan.outputs.sarif }}
+        run: cat ${{ steps.scan-image-github.outputs.sarif }}
 
       - name: Scan the container image -  AWS
         id: scan-image-aws
