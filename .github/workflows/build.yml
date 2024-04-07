@@ -50,6 +50,10 @@ jobs:
 
       - name: Wait for scan completion
         id: get-scan
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         run: |
           SCAN_STATUS="IN_PROGRESS"
           while [ "$SCAN_STATUS" = "IN_PROGRESS" ]; do
