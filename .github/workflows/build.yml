@@ -48,11 +48,24 @@ jobs:
         run: |
           aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
 
-      - name: Get image scan findings
+      - name: Wait for scan completion
         id: get-scan
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
-          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         run: |
-          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
+          SCAN_STATUS="IN_PROGRESS"
+          while [ "$SCAN_STATUS" = "IN_PROGRESS" ]; do
+            echo "Waiting for scan to complete..."
+            sleep 30
+            SCAN_RESULT=$(aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG)
+            SCAN_STATUS=$(echo $SCAN_RESULT | jq -r '.imageScanStatus.status')
+          done
+          echo "Scan completed"
+          echo $SCAN_RESULT
+
+#      - name: Get image scan findings
+#        id: get-scan
+#        env:
+#          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+#          ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+#          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
+#        run: |
+#          aws ecr describe-image-scan-findings --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
