@@ -48,13 +48,13 @@ jobs:
           severity-cutoff: critical
           output-format: 'sarif'
 
-      - name: upload Anchore scan SARIF report
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: ${{ steps.scan-image-github.outputs.sarif }}
-          
-      - name: Inspect action SARIF report
-        run: cat ${{ steps.scan-image-github.outputs.sarif }}
+#      - name: upload Anchore scan SARIF report
+#        uses: github/codeql-action/upload-sarif@v1
+#       with:
+#          sarif_file: ${{ steps.scan-image-github.outputs.sarif }}
+#          
+#      - name: Inspect action SARIF report
+#        run: cat ${{ steps.scan-image-github.outputs.sarif }}
 
       - name: Scan the container image -  AWS
         id: scan-image-aws
