@@ -63,7 +63,14 @@ jobs:
             SCAN_STATUS=$(echo $SCAN_RESULT | jq -r '.imageScanStatus.status')
           done
           echo "Scan completed"
-          echo $SCAN_RESULT
+          CRITICAL_COUNT=$(echo "$SCAN_RESULT" | jq '[.imageScanFindings.findings[] | select(.severity == "CRITICAL")] | length')
+          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+            echo "Critical vulnerabilities found: $CRITICAL_COUNT"
+            exit 1
+          else
+            echo "No critical vulnerabilities found."
+          fi
+#          echo $SCAN_RESULT
 
 #      - name: Get image scan findings
 #        id: get-scan
