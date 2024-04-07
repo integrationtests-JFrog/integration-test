@@ -45,7 +45,7 @@ jobs:
         with:
           image: "$IMAGE_TAG"
           fail-build: false
-          severity-cutoff: critical
+          severity-cutoff: low
           output-format: 'sarif'
 
 #      - name: upload Anchore scan SARIF report
