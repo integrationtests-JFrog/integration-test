@@ -46,7 +46,6 @@ jobs:
           image: "$IMAGE_TAG"
           fail-build: false
           severity-cutoff: critical
-          output-format: 'sarif'
 
       - name: upload Anchore scan SARIF report
         uses: github/codeql-action/upload-sarif@v2
