@@ -39,8 +39,16 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Scan the container image
-        id: scan-image
+      - name: Scan the container image - GitHub Anchore
+        id: scan-image-github
+        uses: anchore/scan-actions@v3
+        with:
+          image: "$IMAGE_TAG"
+          fail-build: true
+          severity-cutoff: critical
+
+      - name: Scan the container image -  AWS
+        id: scan-image-aws
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
@@ -49,7 +57,7 @@ jobs:
           aws ecr start-image-scan --repository-name $ECR_REPOSITORY --image-id imageTag=$IMAGE_TAG
 
       - name: Wait for scan completion
-        id: get-scan
+        id: get-scan-aws
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
@@ -63,13 +71,13 @@ jobs:
             SCAN_STATUS=$(echo $SCAN_RESULT | jq -r '.imageScanStatus.status')
           done
           echo "Scan completed"
-          CRITICAL_COUNT=$(echo "$SCAN_RESULT" | jq '[.imageScanFindings.findings[] | select(.severity == "CRITICAL")] | length')
-          if [ "$CRITICAL_COUNT" -gt 0 ]; then
-            echo "Critical vulnerabilities found: $CRITICAL_COUNT"
-            exit 1
-          else
-            echo "No critical vulnerabilities found."
-          fi
+#          CRITICAL_COUNT=$(echo "$SCAN_RESULT" | jq '[.imageScanFindings.findings[] | select(.severity == "CRITICAL")] | length')
+#          if [ "$CRITICAL_COUNT" -gt 0 ]; then
+#            echo "Critical vulnerabilities found: $CRITICAL_COUNT"
+#            exit 1
+#          else
+#            echo "No critical vulnerabilities found."
+#          fi
 #          echo $SCAN_RESULT
 
 #      - name: Get image scan findings
