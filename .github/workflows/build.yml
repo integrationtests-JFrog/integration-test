@@ -63,7 +63,7 @@ jobs:
         env:
           IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          image-ref: "$IMAGE_TAG"
+          image-ref: "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
