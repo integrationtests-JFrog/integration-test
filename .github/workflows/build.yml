@@ -37,14 +37,14 @@ jobs:
           IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG 
 
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@0.19.0
         env:
           IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
-          image-ref: ${{ env.IMAGE_TAG }}
+          image-ref: "$IMAGE_TAG"
           format: 'template'
           template: '@/contrib/sarif.tpl'
           output: 'trivy-results.sarif'
