@@ -40,7 +40,9 @@ jobs:
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.7.1
+        uses: aquasecurity/trivy-action@0.50.1
+        env:
+          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
           image-ref: ${{ env.IMAGE_TAG }}
           format: 'template'
@@ -52,7 +54,7 @@ jobs:
         uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: 'trivy-results.sarif'
-          
+
 #      - name: Scan the container image - GitHub Anchore
 #        id: scan-image-github
 #        uses: anchore/scan-action@v3
