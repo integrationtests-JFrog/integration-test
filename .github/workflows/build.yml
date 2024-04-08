@@ -50,8 +50,12 @@ jobs:
           severity-cutoff: critical
           output-format: 'sarif'
 
+      - name: Print SARIF
+        id: print-sarif
+        run: cat ${{ steps.scan-image-github.outputs.sarif }}
+
       - name: upload Anchore scan SARIF report
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: ${{ steps.scan-image-github.outputs.sarif }}
           
