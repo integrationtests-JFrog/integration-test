@@ -27,5 +27,5 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: docker.io/user/app:latest
+          tags: ${{ secrets.ACR_USERNAME }}/test:1.0
           file: Dockerfile
