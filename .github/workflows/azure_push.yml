@@ -30,29 +30,9 @@ jobs:
           tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:${{ github.sha }}
           file: Dockerfile
 
-      - name: Log in to Azure CLI
-        uses: azure/login@v2
+      - name: Docker Scan
+        uses: azure/container-scan@v0
         with:
-          client-secret: ${{ secrets.ACR_CRED }}
-          client-id: ${{ secrets.ACR_CLIENT }}
-          tenant-id: ${{ secrets.ACR_TENANT }}
-          subscription-id: ${{ secrets.ACR_SUBSCRIPTION }}
-          enable-AzPSSession: true
-      
-      - name: Trigger a scan on ACR
-        run: |
-          az acr task create \
-            --registry ${{ secrets.ACR_LOGIN_SERVER }} \
-            --name ScanTask \
-            --image test:${{ github.sha }} \
-            --file Dockerfile \
-            --context https://github.com/${{ github.repository }}.git#${{ github.ref }} \
-            --cmd "az acr scan --registry ${{ secrets.ACR_LOGIN_SERVER }} --image test:${{ github.sha }}"
-      
-      - name: Check scan results
-        run: |
-          az acr task logs --registry ${{ secrets.ACR_LOGIN_SERVER }} --name ScanTask
-
-      - name: Log out from Azure
-        run: az logout
-          
+          image-name: ${{ secrets.ACR_LOGIN_SERVER }}/my-test:${{ github.sha }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
