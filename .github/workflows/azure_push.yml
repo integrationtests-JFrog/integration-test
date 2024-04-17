@@ -27,12 +27,13 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:${{ github.sha }}
+          tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:1.0
           file: Dockerfile
 
       - name: Docker Scan
         uses: azure/container-scan@v0
         with:
-          image-name: ${{ secrets.ACR_LOGIN_SERVER }}/my-test:${{ github.sha }}
+          image-name: ${{ secrets.ACR_LOGIN_SERVER }}/test:1.0
           username: ${{ secrets.ACR_USERNAME }}
           password: ${{ secrets.ACR_PASSWORD }}
+#          tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:${{ github.sha }}
