@@ -25,7 +25,9 @@ jobs:
 
       - name: Build and Push to ACR
         uses: docker/build-push-action@v5
+        env:
+          IMAGE_TAG: ${{ steps.get-commit-hash.outputs.commit-hash }}-${{ steps.get-timestamp.outputs.timestamp }}
         with:
           push: true
-          tags: "firstimage"
+          tags: ${{ IMAGE_TAG }}
           file: Dockerfile
