@@ -29,3 +29,8 @@ jobs:
           push: true
           tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:1.0
           file: Dockerfile
+      
+      - name: Scan image on ACR
+        run: |
+          az acr build --registry ${{ secrets.ACR_LOGIN_SERVER }} --image test:1.0 .
+          
