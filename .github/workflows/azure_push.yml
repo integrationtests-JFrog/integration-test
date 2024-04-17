@@ -32,5 +32,6 @@ jobs:
       
       - name: Scan image on ACR
         run: |
+          az login --user ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
           az acr build --registry ${{ secrets.ACR_LOGIN_SERVER }} --image test:1.0 .
           
