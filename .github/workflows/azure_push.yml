@@ -27,11 +27,28 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:1.0
+          tags: ${{ secrets.ACR_LOGIN_SERVER }}/test:${{ github.sha }}
           file: Dockerfile
+
+      - name: Log in to Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CRED }}
       
-      - name: Scan image on ACR
+      - name: Trigger a scan on ACR
         run: |
-          az login --user ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
-          az acr build --registry ${{ secrets.ACR_LOGIN_SERVER }} --image test:1.0 .
+          az acr task create \
+            --registry ${{ secrets.ACR_LOGIN_SERVER }} \
+            --name ScanTask \
+            --image test:${{ github.sha }} \
+            --file Dockerfile \
+            --context https://github.com/${{ github.repository }}.git#${{ github.ref }} \
+            --cmd "az acr scan --registry ${{ secrets.ACR_LOGIN_SERVER }} --image test:${{ github.sha }}"
+      
+      - name: Check scan results
+        run: |
+          az acr task logs --registry ${{ secrets.ACR_LOGIN_SERVER }} --name ScanTask
+
+      - name: Log out from Azure
+        run: az logout
           
