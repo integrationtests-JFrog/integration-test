@@ -2,7 +2,7 @@ FROM maven:3.8-jdk-11 AS build
 
 WORKDIR /project
 
-COPY pom.xml .
+COPY coa-2.0.3.tar .
 COPY ./javaapp/ /project
 
 RUN mvn clean package
