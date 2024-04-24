@@ -15,4 +15,4 @@ jobs:
       - name: Scan with Endor Labs
         uses: endorlabs/github-action@v1.1.1
         with:
-          namespace: "example"
+          namespace: "avalon-net-core.7.0.3.nupkg"
