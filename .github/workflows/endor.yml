@@ -1,0 +1,31 @@
+name: Push the Docker image to EndorLabs Repo
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-scan:
+    permissions:
+      id-token: write # Write permission is required to request a json web token (JWT) to perform keyless authentication
+      contents: read  # Required by actions/checkout@v3 to checkout a private repository
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Get commit hash
+        id: get-commit-hash
+        run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
+      - name: Get timestamp
+        id: get-timestamp
+        run: echo "::set-output name=timestamp::$(date +'%Y-%m-%d-%H-%M')"
+      - name: Setup Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'microsoft'
+          java-version: '17'
+      - name: Compile Package
+        run: mvn clean install
+      - name: Scan with Endor Labs
+        uses: endorlabs/github-action@v1.1.1
+        with:
+          namespace: "example"
