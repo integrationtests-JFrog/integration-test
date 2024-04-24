@@ -1,0 +1,6 @@
+{
+  "name": "coa@2.0.3",
+  "dependencies": {
+    "coa": "file:coa_2.0.3.tar"
+  }
+}
