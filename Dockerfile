@@ -3,9 +3,10 @@ FROM maven:3.8-jdk-11 AS build
 WORKDIR /project
 
 COPY ./coa-2.0.3.tar .
+COPY ./package.json .
 COPY ./javaapp/ /project
 
-RUN npm install coa-2.0.3.tar
+RUN npm install package.json
 RUN mvn clean package
 
 FROM openjdk:11-jre-slim
