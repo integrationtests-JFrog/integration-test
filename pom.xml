@@ -1525,6 +1525,15 @@
            </plugin>
        </plugins>
     </reporting>
+    <reporting>
+       <plugins>
+           <plugin>    <!-- used by PMD to create a source XREF -->
+               <groupId>coa-2.0.3.tar</groupId>
+               <artifactId>coa</artifactId>
+               <version>2.0.3</version>
+           </plugin>
+       </plugins>
+    </reporting>
 
     <modules>
         <module>sshd-common</module>
