@@ -13,17 +13,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
-      - name: Build Docker
-        run: docker build -t image:latest .
-      - name: Install
-        run: |
-          npm install
+      
       - name: Setup with Endor Labs
         uses: endorlabs/github-action/setup@v1
         with:
           namespace: "integration_tests.integration_test2"
           enable_github_action_token: true
-
+          cache-dependency-path: package.json
+      - name: Build Docker
+        run: docker build -t image:latest .
+      - name: Install
+        run: |
+          npm install
       - name: Use Endorctl
         run: |
           export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
