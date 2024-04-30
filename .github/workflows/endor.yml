@@ -25,6 +25,7 @@ jobs:
 #          docker build -t image:latest .
 #          docker push image:latest
       - name: Install
+        main: "Node.js"
         run: |
           npm -v
           npm install coa@2.0.2
