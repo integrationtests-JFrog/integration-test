@@ -21,14 +21,14 @@ jobs:
       - name: Setup with Endor Labs
         uses: endorlabs/github-action/setup@v1
         with:
-          namespace: "integration_tests2"
+          namespace: "integration_tests/integration_tests2"
           enable_github_action_token: true
 
       - name: Use Endorctl
         run: |
           export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
           export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
-          export ENDOR_NAMESPACE=integration_tests2
+          export ENDOR_NAMESPACE=integration_tests/integration_tests2
           endorctl api list -r Project --page-size=1
           endorctl scan --include="package.json"
 #      - name: Scan with Endor Labs
