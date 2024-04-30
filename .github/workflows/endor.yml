@@ -21,7 +21,7 @@ jobs:
       - name: Setup with Endor Labs
         uses: endorlabs/github-action/setup@v1
         with:
-          namespace: "example"
+          namespace: "integration_tests"
           enable_github_action_token: true
 
       - name: Use Endorctl
