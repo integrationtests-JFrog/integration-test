@@ -20,10 +20,9 @@ jobs:
           namespace: "integration_tests.integration_test2"
           enable_github_action_token: true
           cache-dependency-path: package.json
-#      - name: Build Docker
-#        run: |
-#          docker build -t image:latest .
-#          docker push image:latest
+      - name: Build Docker
+        run: |
+          docker build -t image:latest .
       - name: Install
         run: |
           npm -v
