@@ -7,18 +7,31 @@ jobs:
   build-and-scan:
     permissions:
       id-token: write # Write permission is required to request a json web token (JWT) to perform keyless authentication
+      packages: write
       contents: read  # Required by actions/checkout@v3 to checkout a private repository
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
       - name: Build Docker
-        run: |
-          docker build .
+        run: docker builds -t image:latest
       - name: Install
         run: |
           npm install
-      - name: Scan with Endor Labs
-        uses: endorlabs/github-action@v1.1.1
+      - name: Setup with Endor Labs
+        uses: endorlabs/github-action/setup@<version>
         with:
-          namespace: "integration_tests"
+          namespace: "example"
+          enable_github_action_token: true
+
+      - name: Use Endorctl
+        run: |
+          export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
+          export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
+          export ENDOR_NAMESPACE=integration_tests
+          endoctl api list -r Project
+          endoctl scan
+#      - name: Scan with Endor Labs
+#        uses: endorlabs/github-action@v1.1.1
+#        with:
+#          namespace: "integration_tests"
