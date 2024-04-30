@@ -1,16 +1,9 @@
-FROM ubuntu
+FROM node 18.0.0
 
 WORKDIR /project
 
-RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
-RUN apt-get update
-RUN apt-get -y install python-software-properties git build-essential
-RUN add-apt-repository -y ppa:chris-lea/node.js
-RUN apt-get update
-RUN apt-get -y install nodejs
-
-COPY ./package.json /project.
+COPY package.json ./
 
 RUN npm install
 
-CMD ["node", "server.js"]
+CMD ["node", "app.js"]
