@@ -15,6 +15,9 @@ jobs:
       - name: Build Docker
         run: |
           docker build .
+      - name: Install
+        run: |
+          npm install
       - name: Scan with Endor Labs
         uses: endorlabs/github-action@v1.1.1
         with:
