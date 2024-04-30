@@ -20,13 +20,13 @@ jobs:
           namespace: "integration_tests.integration_test2"
           enable_github_action_token: true
           cache-dependency-path: package.json
-      - name: Build and push
 #      - name: Build Docker
 #        run: |
 #          docker build -t image:latest .
 #          docker push image:latest
       - name: Install
         run: |
+          npm -v
           npm install package.json
       - name: Use Endorctl
         run: |
@@ -34,7 +34,7 @@ jobs:
           export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
           export ENDOR_NAMESPACE=integration_tests.integration_test2
           endorctl api list -r Project --page-size=1
-          endorctl scan --include="https://github.com/integrationtests-JFrog/integration-test/blob/main/package.json"
+          endorctl scan --include="https://github.com/integrationtests-JFrog/integration-test/blob/main/"
 #      - name: Scan with Endor Labs
 #        uses: endorlabs/github-action@v1.1.1
 #        with:
