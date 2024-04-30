@@ -2,9 +2,9 @@
   "name": "example-app",
   "version": "1.0.0",
   "description": "A simple Node.js application",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "coa": "2.0.2",
