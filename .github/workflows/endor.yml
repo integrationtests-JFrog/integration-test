@@ -30,7 +30,6 @@ jobs:
           npm install coa@2.0.2
           npm install nginx@1.0.8
           npm install package.json
-          npm run build
           npm publish
       - name: Use Endorctl
         run: |
