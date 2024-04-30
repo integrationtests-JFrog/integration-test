@@ -30,7 +30,7 @@ jobs:
           export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
           export ENDOR_NAMESPACE=integration_tests.integration_test2
           endorctl api list -r Project --page-size=1
-          endorctl scan --include=package.json
+          endorctl scan --include="https://github.com/integrationtests-JFrog/integration-test/blob/main/package.json"
 #      - name: Scan with Endor Labs
 #        uses: endorlabs/github-action@v1.1.1
 #        with:
