@@ -7,7 +7,7 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "coa": "2.0.2",
+    "coa": "2.0.3",
     "nginx": "1.0.8"
   },
   "author": "Name",
