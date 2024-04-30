@@ -12,6 +12,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
+      - name: Build Docker
+        run: |
+          docker build ${{ github.workspace }}/Dockerfile
       - name: Scan with Endor Labs
         uses: endorlabs/github-action@v1.1.1
         with:
