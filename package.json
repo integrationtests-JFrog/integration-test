@@ -1,11 +1,16 @@
 {
-  {
-    "name": "contianer-scan",
-    "version": "1.0.0",
+  "name": "example-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js application",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
   },
-    "dependencies": {
-      "coa": "2.0.2",
-      "nginx": "1.0.8",
-      "node-cron": "3.0.3"
-  }
+  "dependencies": {
+    "coa": "2.0.2",
+    "nginx": "1.0.8"
+  },
+  "author": "Name",
+  "license": "ISC"
 }
+
