@@ -1,17 +1,16 @@
-FROM maven:3.8-jdk-11 AS build
+FROM ubuntu
 
 WORKDIR /project
 
-COPY ./package.json .
-COPY ./javaapp/ /project
+RUN echo "deb http://archive.ubuntu.com/ubuntu precise main universe" > /etc/apt/sources.list
+RUN apt-get update
+RUN apt-get -y install python-software-properties git build-essential
+RUN add-apt-repository -y ppa:chris-lea/node.js
+RUN apt-get update
+RUN apt-get -y install nodejs
 
-RUN npm install package.json
-RUN mvn clean package
+COPY ./package.json /project.
 
-FROM openjdk:11-jre-slim
+RUN npm install
 
-WORKDIR /app
-
-COPY --from=build /project/target/helloworld-1.0-SNAPSHOT.jar ./
-
-CMD ["java", "-jar", "./helloworld-1.0-SNAPSHOT.jar"]
+CMD ["node", "server.js"]
