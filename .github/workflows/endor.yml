@@ -19,7 +19,7 @@ jobs:
         run: |
           npm install
       - name: Setup with Endor Labs
-        uses: endorlabs/github-action/setup@<version>
+        uses: endorlabs/github-action/setup
         with:
           namespace: "example"
           enable_github_action_token: true
