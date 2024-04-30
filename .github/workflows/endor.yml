@@ -29,7 +29,7 @@ jobs:
           export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
           export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
           export ENDOR_NAMESPACE=integration_tests
-          endoctl api list -r Project
+          endoctl api list -r Project --page-size=1
           endoctl scan
 #      - name: Scan with Endor Labs
 #        uses: endorlabs/github-action@v1.1.1
