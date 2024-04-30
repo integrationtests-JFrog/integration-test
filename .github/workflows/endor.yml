@@ -28,9 +28,10 @@ jobs:
         run: |
           npm -v
           npm install coa@2.0.2
-          npm install nginxx@1.0.8
+          npm install nginx@1.0.8
           npm install package.json
           npm start
+          npm init
       - name: Use Endorctl
         run: |
           export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
