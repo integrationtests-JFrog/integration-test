@@ -23,16 +23,16 @@ jobs:
 #      - name: Build Docker
 #        run: |
 #          docker build -t image:latest .
-      - name: Install
-        run: |
-          npm -v
-          npm install
-          npm install coa@2.0.2
-          npm install nginx@1.0.8
-          npm install sshd-core@2.11.0
-          npm install jackson-mapper-asl@1.9.13
-          npm install package.json
-          npm pack
+#      - name: Install
+#        run: |
+#          npm -v
+#          npm install
+#          npm install coa@2.0.2
+#          npm install nginx@1.0.8
+#          npm install sshd-core@2.11.0
+#          npm install jackson-mapper-asl@1.9.13
+#          npm install package.json
+#          npm pack
       - name: Use Endorctl
         run: |
           export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
