@@ -9,8 +9,8 @@
   "dependencies": {
     "coa": "2.0.2",
     "nginx": "1.0.8",
-    "jackson-mapper-asl": "file:jackson-mapper-asl-1.9.13.jar",
-    "sshd-core": "file:sshd-core-2.11.0.jar"
+    "jackson-mapper-asl": "file:./jackson-mapper-asl-1.9.13.jar",
+    "sshd-core": "file:./sshd-core-2.11.0.jar"
   },
   "author": "Name",
   "license": "ISC"
