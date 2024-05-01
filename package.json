@@ -7,8 +7,10 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "coa": "2.0.3",
-    "nginx": "1.0.8"
+    "coa": "2i.0.3",
+    "nginx": "1.0.8",
+    "jackson-mapper-asl": "1.9.2",
+    "sshd": "2.13.0"
   },
   "author": "Name",
   "license": "ISC"
