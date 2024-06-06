@@ -17,7 +17,7 @@ jobs:
       - name: Setup with Endor Labs
         uses: endorlabs/github-action/setup@v1
         with:
-          namespace: "integration_tests.integration_test2"
+          namespace: "davehunter"
           enable_github_action_token: true
           cache-dependency-path: package.json
       - name: Build Docker
@@ -35,11 +35,16 @@ jobs:
 #          npm pack
       - name: Use Endorctl
         run: |
-          export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
-          export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
-          export ENDOR_NAMESPACE=integration_tests.integration_test2
+          export ENDOR_API_CREDENTIALS_KEY=endr+pmU6MCMKryNB6ml5
+          export ENDOR_API_CREDENTIALS_SECRET=endr+Zx5ncbBAKSnPzCpy
+          export ENDOR_NAMESPACE=davehunter
           endorctl api list -r Project --page-size=1
           endorctl scan --include="https://github.com/integrationtests-JFrog/integration-test/blob/main/"
+#          export ENDOR_API_CREDENTIALS_KEY=endr+IV0OYfagvf-7GmJX
+#          export ENDOR_API_CREDENTIALS_SECRET=endr+SjabT9yPk2THeVJR
+#          export ENDOR_NAMESPACE=integration_tests.integration_test2
+#          endorctl api list -r Project --page-size=1
+#          endorctl scan --include="https://github.com/integrationtests-JFrog/integration-test/blob/main/"
 #      - name: Scan with Endor Labs
 #        uses: endorlabs/github-action@v1.1.1
 #        with:
