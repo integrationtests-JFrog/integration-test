@@ -1,6 +1,14 @@
 {
-  "name": "crypt-osj",
-  "version": "0.0.1-security.0",
-  "description": "security holding package",
-  "repository": "npm/security-holder"
+  "name": "example-app",
+  "version": "1.0.0",
+  "description": "A simple Node.js application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "crypt-osj": "0.0.1-security.0"
+  },
+  "author": "Name",
+  "license": "ISC"
 }
