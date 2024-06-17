@@ -7,7 +7,9 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "crypt-osj": "0.0.1-security.0"
+    "crypt-osj": "0.0.1-security.0",
+    "node": "18.0.0",
+    "nginx": "1.27.0"
   },
   "author": "Name",
   "license": "ISC"
